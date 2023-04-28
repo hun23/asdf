@@ -38,6 +38,7 @@ def create(request):
 @require_safe
 def detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
+    
     comments = review.comment_set.all()
     comment_form = CommentForm()
     context = {

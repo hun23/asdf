@@ -1,4 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>Recommended Movies for {{ user.username }}</h1>
+{% for movie in recommneded_movies %}
+{{ movie.title }} : {{ movie.vote_average}}
+{% for gn in movie.genres.all %}
+	{{ gn.name }}
+{% endfor %}
+<br>
+{% endfor %}
+<hr>
+
+<script>
+
+</script>
 {% endblock %}
