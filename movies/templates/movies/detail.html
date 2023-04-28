@@ -1,4 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<h1>{{movie.title}}</h1>
+<br>
+<img src="{{movie.poster_path}}" alt="" width="300">
+<div>
+    <h4>기본 정보</h4>
+    <p>{{movie.title}}</p>
+    <p>{{movie.release_date}} 
+        {% for genre in movie.genres.all %}
+        <a href="{% url 'movies:recommended' genre.pk %}">
+            {{genre.name}}
+        </a>
+        {% endfor %}
+    </p>
+    <p>{{movie.overview}}</p>
+</div>
+<hr>
+<div>
+    <a href="{% url 'movies:index' %}">뒤로가기</a>
+</div>
 {% endblock %}
+
+{% comment %} title = models.CharField(max_length=100)
+release_date = models.DateField()
+popularity = models.FloatField()
+vote_count = models.IntegerField()
+vote_average = models.FloatField()
+overview = models.TextField()
+poster_path = models.CharField(max_length=200)
+genres = models.ManyToManyField(Genre) {% endcomment %}
