@@ -9,7 +9,7 @@
     <p>{{movie.title}}</p>
     <p>{{movie.release_date}} 
         {% for genre in movie.genres.all %}
-        <a href="{% url 'movies:recommended' %}">
+        <a href="{% url 'movies:GenreDetail' genre.pk%}">
             {{genre.name}}
         </a>
         {% endfor %}
