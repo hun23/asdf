@@ -2,4 +2,58 @@
 
 {% block content %}
   <h1>Movies</h1>
+  <hr>
+  
+  <!-- 02_home.html -->
+  
+  <main role="main" style="padding-top: 72.12px" >
+    <div class="album  text-center">
+      <div class="container">
+        <div class="row">
+
+          {% for movie in movies %}
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <img class="card-img-top" style="display: block;" src="{{movie.poster_path}}" >
+              <div class="card-body text-start">
+                <h5 class="">
+                  <a href="{% url 'movies:detail' movie.pk %}">
+                    {{movie.title}}
+                  </a> 
+                </h5>
+                <p class="">
+                  {% for genre in movie.genres.all %}
+                    <a href="{% url 'movies:recommended' genre.pk%}">{{genre.name}}</a>
+                  {% endfor %}
+                </p>
+                <div class="cut-letter">
+                  <p>
+                    {{movie.overview}}
+                  </p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>        
+          {% endfor %}
+
+        </div>
+      </div>
+    </div>   
+  </main>
 {% endblock %}
+
+{% comment %} title = models.CharField(max_length=100)
+release_date = models.DateField()
+popularity = models.FloatField()
+vote_count = models.IntegerField()
+vote_average = models.FloatField()
+overview = models.TextField()
+poster_path = models.CharField(max_length=200)
+genres = models.ManyToManyField(Genre) {% endcomment %}
