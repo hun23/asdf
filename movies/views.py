@@ -32,19 +32,21 @@ def recommended(request):
         # 10개 영화 추천
         recommneded_movies_priority_queue = []
         all_genres = set(Genre.objects.all())
-        all_movie_ranking = Movie.objects.all().order_by('vote_average')
+        all_movie_ranking = Movie.objects.all().order_by("vote_average")
         all_movie_visited = [False] * len(all_movie_ranking)
         # 1. 좋아요한 영화의 장르 받기
         liked_reviews = user.like_reviews.all()
+        print(liked_reviews)
         liked_movie_genres = set()
         for lr in liked_reviews:
             try:
                 mv = Movie.objects.get(title=lr.movie_title)
+                print(mv)
                 gnrs = mv.genres.all()
                 for gnr in gnrs:
                     liked_movie_genres.add(gnr)
             except:
-                print('no matching mv title')
+                print("no matching mv title")
         print(f"liked: {liked_movie_genres}")
         # 2. 각 장르별 영화 추천
         # 3. 각 장르별 별점 기준 추천
@@ -65,8 +67,16 @@ def recommended(request):
             recommneded_movies.append(all_movie_ranking[popped[1]])
             cnt += 1
         print(recommneded_movies)
-        context = {
-            'recommneded_movies': recommneded_movies
-        }
-        return render(request, 'movies/recommended.html', context)
-    return redirect('moives:index')
+        context = {"recommneded_movies": recommneded_movies}
+        return render(request, "movies/recommended.html", context)
+    return redirect("moives:index")
+
+
+@require_safe
+def GenreDetail(request, genre_id):
+    genre = Genre.objects.get(pk=genre_id)
+    movies = genre.movie_set.all()
+    context = {
+        "movies": movies,
+    }
+    return render(request, "movies/index.html", context)
