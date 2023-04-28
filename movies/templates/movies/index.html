@@ -23,7 +23,7 @@
                 </h5>
                 <p class="">
                   {% for genre in movie.genres.all %}
-                    <a href="{% url 'movies:recommended' genre.pk%}">{{genre.name}}</a>
+                    <a href="{% url 'movies:recommended' %}">{{genre.name}}</a>
                   {% endfor %}
                 </p>
                 <div class="cut-letter">
